@@ -26,32 +26,33 @@ const jsPuns = userDesign[0][1];
 const heartJs = userDesign[0][2];
 // Select Design box for 'change' event listener.
 const designName = document.getElementById('design');
-
+console.log(designName);
 
 // Function for listener.
-function showInfo (info){
+function showInfo (){
 	 colorOptions.hidden = false;
-	 const puns = [];
-	 puns.push(colorOptions[1], colorOptions[2], colorOptions[3]);
- 	 const js = [];
-	 js.push(colorOptions[4], colorOptions[5], colorOptions[6]);
 	 // Group colors for JS puns.
-	 for (let i = 0; i < colorOptions.length; i += 1){
+	 for (let i = 0; i < 3; i += 1){
 		 if (designName.value === 'js puns'){
 			 colorOptions[i+4].hidden = true;
+			 console.log(designName.value);
+	 		}
+	 		else {
+	 		colorOptions[i+1].hidden = true;
+	 		console.log(designName.value);}
+	 	}
 	 }
-	 // Group colors for JS Love.
-		 else if (designName.value === 'heart js'){
-			colorOptions[i<4].hidden = true;
-		}
-	}
-}
+	
+	
+		
+	
+
 
 
 // 'Change' listener.
+
 designName.addEventListener('change', (event) => {
-	if (designName.value === 'js puns'|'heart js'){
-		showInfo();
-	}
+		showInfo(); 
 });
+
 
