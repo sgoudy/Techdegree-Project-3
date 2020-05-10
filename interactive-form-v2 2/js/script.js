@@ -1,58 +1,56 @@
 // Set "name" to "autofocus".
-const nameAutoFocus = document.getElementById("name").setAttribute("autofocus", "true");
+const nameAutoFocus = document.querySelector('#name').setAttribute("autofocus", "true");
+
 // Create 'other' input field that's hidden initially but displays with js disabled.
-const otherTitle = document.getElementById("other-title");
+const otherTitle = document.querySelector('#other-title');
 otherTitle.style.display = 'none';
+
 // Don't allow "select theme" to be a selected item.
-const design = document.getElementsByName("user-design");
-const selectDesign = design[0][0];
-selectDesign.style.display = 'none';
+const design = document.querySelector('#design');
+design[0].hidden = true;
+
+// Select parent element of colors.
+const colorTitle = document.querySelector('#color');
+colorTitle.setAttribute('hidden', 'true');
+
 // Add "please select t-shirt" to color list.
-const select = document.querySelectorAll('select');
-const selectColor = select[3];
 const newTee = document.createElement('option');
-selectColor.appendChild(newTee);
+colorTitle.appendChild(newTee);
 newTee.textContent = "Please Select a T-shirt Theme";
-selectColor.insertBefore(newTee, selectColor.childNodes[0]);
+colorTitle.insertBefore(newTee, colorTitle.childNodes[0]);
 newTee.setAttribute('selected', 'selected');
 newTee.style.display = 'none';
-// Hide color options.
-const colorOptions = document.getElementById('color');
-colorOptions.setAttribute('hidden', 'true');
-// Make appropriate color option appear when 'design' selected.
-const userDesign = document.getElementsByName('user-design');
-// Select 'values'
-const jsPuns = userDesign[0][1];
-const heartJs = userDesign[0][2];
-// Select Design box for 'change' event listener.
-const designName = document.getElementById('design');
-console.log(designName);
+
+// Select color options.
+const colorOptions = document.querySelectorAll('#color option');
 
 // Function for listener.
 function showInfo (){
-	 colorOptions.hidden = false;
-	 // Group colors for JS puns.
-	 for (let i = 0; i < 3; i += 1){
-		 if (designName.value === 'js puns'){
-			 colorOptions[i+4].hidden = true;
-			 console.log(designName.value);
+	// color options = colorTitle
+	 colorTitle.hidden = false;
+		 if (design.value === 'js puns'){
+			 colorOptions[1].hidden = false;
+			 colorOptions[2].hidden = false;
+			 colorOptions[3].hidden = false;
+			 colorOptions[4].hidden = true;
+			 colorOptions[5].hidden = true;
+			 colorOptions[6].hidden = true;
+
 	 		}
 	 		else {
-	 		colorOptions[i+1].hidden = true;
-	 		console.log(designName.value);}
+	 		colorOptions[1].hidden = true;
+	 		colorOptions[2].hidden = true;
+	 		colorOptions[3].hidden = true;
+	 		colorOptions[4].hidden = false;
+			colorOptions[5].hidden = false;
+			colorOptions[6].hidden = false;
+	 		}
 	 	}
-	 }
+	 
 	
-	
-		
-	
-
-
 
 // 'Change' listener.
 
-designName.addEventListener('change', (event) => {
-		showInfo(); 
-});
+design.addEventListener('change', showInfo, false);
 
 
