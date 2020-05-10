@@ -24,6 +24,7 @@ newTee.style.display = 'none';
 // Select color options.
 const colorOptions = document.querySelectorAll('#color option');
 
+//---------------------------------------------------------//
 // Function for listener.
 function showInfo (){
 	 colorTitle.hidden = false;
@@ -46,6 +47,8 @@ function showInfo (){
 	 	}
 // 'Change' listener.
 design.addEventListener('change', showInfo, false);
+
+// ACTIVITIES SECTION //
 //----------------------------------------------------------//
 const totalActCost = document.createElement('div');
 const activities = document.querySelector('.activities');
@@ -68,14 +71,42 @@ activities.addEventListener('change', (e) => {
 			else {
 				actInput[i].disabled = false;
 			}
+		}
 	}
-}
 		if(clicked.checked){
 			actCost += clickedType;
 		}
 			else {
 			actCost -= clickedType;
 			}
-		return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
+	return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 });
+
+// PAYMENT SECTION //
 //---------------------------------------------------------//
+const selectPay = document.querySelector('#payment');
+selectPay[0].setAttribute('hidden', 'true');
+
+function payInfo (e) {
+	const selectedMethod = e.target.value;
+	const credit = document.getElementById('credit-card');
+	const payPal = document.getElementById('paypal');
+	const bit = document.getElementById('bitcoin');
+	 if (selectedMethod === 'credit card'){
+			 credit.hidden = false;
+			 payPal.hidden = true;
+			 bit.hidden = true;
+	 		}
+	 	else if (selectedMethod === 'paypal'){
+	 		 credit.hidden = true;
+			 payPal.hidden = false;
+			 bit.hidden = true;
+			}
+	 	else if (selectedMethod === 'bitcoin'){
+	 		 credit.hidden = true;
+			 payPal.hidden = true;
+			 bit.hidden = false;
+	 		}
+	 	}
+// 'Change' listener.
+selectPay.addEventListener('change', payInfo, false);
