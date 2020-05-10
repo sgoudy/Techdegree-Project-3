@@ -53,18 +53,29 @@ activities.appendChild(totalActCost);
 let actCost = 0;
 totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
 
-
-
 activities.addEventListener('change', (e) => {
 	const clicked = e.target;
 	const clickedType = parseInt(clicked.getAttribute('data-cost'));
+	const date = e.target;
+	const dateData = date.getAttribute('data-day-and-time');
+	const actInput = document.querySelectorAll('.activities input');	
+	for (let i = 0; i < actInput.length; i += 1){
+		const actType = actInput[i].getAttribute('data-day-and-time');
+	if(dateData === actType &&  date !== actInput[i]){ 
+			if(date.checked) {
+				actInput[i].disabled = true;
+			}
+			else {
+				actInput[i].disabled = false;
+			}
+	}
+}
 		if(clicked.checked){
 			actCost += clickedType;
-			totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 		}
 			else {
 			actCost -= clickedType;
-			totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 			}
+		return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 });
-
+//---------------------------------------------------------//
