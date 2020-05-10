@@ -26,7 +26,6 @@ const colorOptions = document.querySelectorAll('#color option');
 
 // Function for listener.
 function showInfo (){
-	// color options = colorTitle
 	 colorTitle.hidden = false;
 		 if (design.value === 'js puns'){
 			 colorOptions[1].hidden = false;
@@ -35,22 +34,37 @@ function showInfo (){
 			 colorOptions[4].hidden = true;
 			 colorOptions[5].hidden = true;
 			 colorOptions[6].hidden = true;
-
 	 		}
 	 		else {
-	 		colorOptions[1].hidden = true;
-	 		colorOptions[2].hidden = true;
-	 		colorOptions[3].hidden = true;
-	 		colorOptions[4].hidden = false;
-			colorOptions[5].hidden = false;
-			colorOptions[6].hidden = false;
+	 		 colorOptions[1].hidden = true;
+	 		 colorOptions[2].hidden = true;
+	 		 colorOptions[3].hidden = true;
+	 		 colorOptions[4].hidden = false;
+			 colorOptions[5].hidden = false;
+			 colorOptions[6].hidden = false;
 	 		}
 	 	}
-	 
-	
-
 // 'Change' listener.
-
 design.addEventListener('change', showInfo, false);
+//----------------------------------------------------------//
+const totalActCost = document.createElement('div');
+const activities = document.querySelector('.activities');
+activities.appendChild(totalActCost);
+let actCost = 0;
+totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
 
+
+
+activities.addEventListener('change', (e) => {
+	const clicked = e.target;
+	const clickedType = parseInt(clicked.getAttribute('data-cost'));
+		if(clicked.checked){
+			actCost += clickedType;
+			totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
+		}
+			else {
+			actCost -= clickedType;
+			totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
+			}
+});
 
