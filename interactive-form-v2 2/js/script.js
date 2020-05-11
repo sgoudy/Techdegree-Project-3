@@ -1,5 +1,6 @@
 // Set "name" to "autofocus".
-const nameAutoFocus = document.querySelector('#name').setAttribute("autofocus", "true");
+const nameAutoFocus = document.querySelector('#name');
+nameAutoFocus.setAttribute("autofocus", "true");
 
 // Create 'other' input field that's hidden initially but displays with js disabled.
 const otherTitle = document.querySelector('#other-title');
@@ -110,3 +111,61 @@ function payInfo (e) {
 	 	}
 // 'Change' listener.
 selectPay.addEventListener('change', payInfo, false);
+
+// FORM VALIDATION //
+//--------------------------------------------------------------//
+
+// declare variables for input fields
+const form = document.querySelector('form');
+const nameVal = document.getElementById('name');
+const emailVal = document.getElementById('mail');
+const activitiesVal = document.querySelectorAll('.activities');
+const ccNumVal = document.querySelector('#cc-num');
+const ccZip = document.querySelector('#zip');
+const cVV = document.querySelector('#cvv');
+
+// name validator (has a value > 0)----------------------
+const nameValidFunc = () => {
+	const nameValValue = nameVal.value;
+	console.log(nameValValue);
+	if (nameValValue.length > 0){
+		nameVal.style.borderColor = 'white';
+	}
+	else {
+		nameVal.style.borderColor = 'red';
+		return false;
+	}
+}
+
+// email validator (contains '@' and '.', in that order)-
+const emailValidFunc = () => {
+	const emailValValue = emailVal.value;
+	console.log(emailValValue);
+	const emailCheck = emailValValue.indexOf('@');
+	console.log(emailCheck);
+	const emailLast = emailValValue.lastIndexOf('.');
+	console.log(emailLast);
+	if(emailCheck > 1 && emailLast > (emailCheck + 1)){
+		emailVal.style.borderColor = 'white';
+	} else {
+		emailVal.style.borderColor = 'red';
+		return false;
+	}
+}
+
+// activities validator (at least 1 selected) -----------
+const activitiesValFunc = () => {
+
+
+}
+
+form.addEventListener('submit', (e) => {
+  if (!nameValidFunc()){
+    e.preventDefault();
+    console.log("This validator prevented submission");
+  }
+  if (!emailValidFunc()){
+    e.preventDefault();
+    console.log("This validator prevented submission");
+  }
+});
