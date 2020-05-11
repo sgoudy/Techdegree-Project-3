@@ -119,7 +119,17 @@ selectPay.addEventListener('change', payInfo, false);
 const form = document.querySelector('form');
 const nameVal = document.getElementById('name');
 const emailVal = document.getElementById('mail');
-const activitiesVal = document.querySelectorAll('.activities');
+
+const activitiesDiv = document.querySelector('.activities');
+	console.log(activitiesDiv);
+const activitiesCon = document.querySelector('.activities legend');
+const activitiesVal = document.querySelectorAll('.activities input');
+	console.log(activitiesVal);
+	
+
+	console.log(activitiesVal[1].checked);
+
+
 const ccNumVal = document.querySelector('#cc-num');
 const ccZip = document.querySelector('#zip');
 const cVV = document.querySelector('#cvv');
@@ -127,44 +137,51 @@ const cVV = document.querySelector('#cvv');
 // name validator (has a value > 0)----------------------
 const nameValidFunc = () => {
 	const nameValValue = nameVal.value;
-	console.log(nameValValue);
 	if (nameValValue.length > 0){
 		nameVal.style.borderColor = 'white';
+		return true;
 	}
-	else {
 		nameVal.style.borderColor = 'red';
 		return false;
 	}
-}
 
 // email validator (contains '@' and '.', in that order)-
 const emailValidFunc = () => {
-	const emailValValue = emailVal.value;
-	console.log(emailValValue);
+	const emailValValue = emailVal.value;	
 	const emailCheck = emailValValue.indexOf('@');
-	console.log(emailCheck);
 	const emailLast = emailValValue.lastIndexOf('.');
-	console.log(emailLast);
 	if(emailCheck > 1 && emailLast > (emailCheck + 1)){
 		emailVal.style.borderColor = 'white';
-	} else {
+		return true;
+	} 
 		emailVal.style.borderColor = 'red';
 		return false;
 	}
-}
 
 // activities validator (at least 1 selected) -----------
 const activitiesValFunc = () => {
+	for (let i = 0; i < activitiesVal.length; i += 1){
+		if (activitiesVal[i].checked){
+			activitiesDiv.style.border = '2px solid white';
+			return true;
+		}
+	}
+			activitiesDiv.style.border = '2px solid red';
+			return false;
+		}
+	
 
-
-}
-
+// EVENT LISTENER FOR ALL FUNCTIONS----------------------
 form.addEventListener('submit', (e) => {
   if (!nameValidFunc()){
     e.preventDefault();
     console.log("This validator prevented submission");
   }
   if (!emailValidFunc()){
+    e.preventDefault();
+    console.log("This validator prevented submission");
+  }
+  if (!activitiesValFunc()){
     e.preventDefault();
     console.log("This validator prevented submission");
   }
