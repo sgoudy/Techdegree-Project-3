@@ -171,7 +171,7 @@ function showOrHideTip(show, element) {
     element.style.display = "inherit";
     } else {
     element.style.display = "none";
-      }
+    }
 }
 
 // Name validator (verify ONLY letters)-------------------
@@ -180,25 +180,21 @@ function nameValidFunc () {
 	const testName = /^[A-Za-z]+$/.test(nameValValue);
 	if (nameValValue.length > 0 && testName === true){
 		nameVal.style.borderColor = 'white';
-		return true;
 		}
 		 else {nameVal.style.borderColor = 'red';
-	showOrHideTip('show', nameTip);
-	return false;
+		showOrHideTip('show', nameTip);
+		return false;
 		}
-	}
+}
 
 // Email validator (contains '@' and '.', in that order)-
-
-
 function emailValidFunc (){
 	const emailValue = email.value;	
 	const emailCheck = emailValue.indexOf('@');
 	const emailLast = emailValue.lastIndexOf('.');
-	if(emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)){
-		email.style.borderColor = 'white';
-		return true;
-		}
+    if (emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)) {
+    	email.style.borderColor = 'white';
+    }
     else {
 	email.style.borderColor = 'red';
 	return false;
@@ -229,8 +225,8 @@ function isValidNumber (){
 			return true;
 		} else {
 			ccNum.style.borderColor = 'red';
-			}
 		}
+	}
 	else {ccNum.style.borderColor = 'red';
 	return false;
 	}
@@ -247,8 +243,8 @@ function isValidZip(){
 			return true;
 		} else {
 			ccZip.style.borderColor = 'red';
-			}
-		} 
+		}
+	} 
 	else {ccZip.style.borderColor = 'red';
 	return false;
 	}
@@ -265,8 +261,8 @@ function isValidCVV(){
 			return true;
 		} else {
 			cVV.style.borderColor = 'red';
-			}
-		} 
+		}
+	} 
 	else {cVV.style.borderColor = 'red';
 	return false;
 	}
