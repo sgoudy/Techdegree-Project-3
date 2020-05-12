@@ -11,13 +11,13 @@
 body,
 input,
 button {
-	font-family: 'Nunito', sans-serif;
+	font-family: 'fantasy', sans-serif;
 }
 
 body {
-  font: 1em/1.5;
-  color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+  	font: 1em/1.5;
+  	color: black;
+	background: darkgray;
 }
 
 header {
@@ -25,6 +25,7 @@ header {
 }
 
 h1 {
+	color: black;
 	font-size: 2.5em;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 	margin: 0;
@@ -34,14 +35,19 @@ a {
   text-decoration: none;
 }
 
+span {
+	color: black;
+
+}
+
 /* ================================= 
   Form Element Styles
 ==================================== */
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
-	border: 2px solid rgba(8, 63, 87, 0.6);
+	background: #a2b9bc;
+	border: 2px solid black;
 	border-radius: 3px;
 }
 
@@ -59,13 +65,14 @@ fieldset {
 legend,
 button {
 	font-size: 1.25em;	
+	color: white;
 }
 
 legend {
-	font-weight: bold;
+	text-align: center;
 	padding-top: .5em;
-	border-top: 2px solid rgba(8, 63, 87, 0.6);
 	margin-bottom: 1.125em;
+	background-color: black;
 }
 
 input[type="text"],
@@ -89,8 +96,8 @@ input {
 	font-size: 1em;
 	font-weight: 500;
 	padding: .8em;
-	background: #e9f6fb;
-	border: 2px solid rgb(111, 157, 220);
+	background: lightgray;
+	border: 2px solid black;
 	border-radius: 3px;
 	outline: none;
 }

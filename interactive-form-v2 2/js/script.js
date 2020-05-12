@@ -1,6 +1,9 @@
 // Set "name" to "autofocus".
-const nameAutoFocus = document.querySelector('#name');
-nameAutoFocus.setAttribute("autofocus", "true");
+
+nameFocus = function getFocus() {
+	document.querySelector('#name').focus();
+	}
+
 
 // Create 'other' input field that's hidden initially but displays with js disabled.
 const otherTitle = document.querySelector('#other-title');
@@ -129,6 +132,33 @@ const ccNum = document.querySelector('#cc-num');
 const ccZip = document.querySelector('#zip');
 const cVV = document.querySelector('#cvv');
 
+// Add <span> elements for tooltips
+// Tips for CC Number.
+
+const numDiv = document.querySelector('.col-6');
+const numTip = document.createElement('span');
+numTip.textContent = 'Number should be between 13 and 16 digits.';
+numDiv.appendChild(numTip);
+numTip.hidden = true;
+
+// Tips for CC Zipcode.
+
+const zipDiv = document.querySelector('.col-3');
+const zipTip = document.createElement('span');
+zipTip.textContent = 'Please enter 5-digit number.';
+zipDiv.appendChild(zipTip);
+zipTip.hidden = true;
+
+// Tips for CC CVV.
+
+const zipDivs = document.querySelectorAll('.col-3');
+const cvvDiv = zipDivs[1];
+const cVVTip = document.createElement('span');
+cVVTip.textContent = 'Please enter 3-digit number.';
+cvvDiv.appendChild(cVVTip);
+cVVTip.hidden = true;
+
+
 // Name validator (verify value  > 0)----------------------
 const nameValidFunc = () => {
 	const nameValValue = nameVal.value;
@@ -175,15 +205,20 @@ function showOrHideTip(show, element) {
       }
 }
 
+
 // -----------------------------------------------------
 function isValidNumber (){
 	const ccNumVal = ccNum.value;
 	const ccNumValDig = parseInt(ccNumVal);
 	if (ccNumValDig > 0 ){
-		return /^\d{13,16}$/.test(ccNumValDig);
-		ccNum.style.borderColor = 'white';
-		return true;
-	} else {ccNum.style.borderColor = 'red';
+		const test2 = /^\d{13,16}$/.test(ccNumValDig);
+		if (test2 === true){
+			ccNum.style.borderColor = 'white';
+		} else {
+			ccNum.style.borderColor = 'red';
+			}
+		}
+	else {ccNum.style.borderColor = 'red';
 	return false;
 	}
 }
@@ -192,10 +227,14 @@ function isValidZip(){
 	const ccZipVal = ccZip.value;
 	const ccZipDig = parseInt(ccZipVal);
 	if (ccZipDig > 0 ){
-		return /^\d{5}$/.test(ccZipDig);
-		ccZip.style.borderColor = 'white';
-		return true;
-	} else {ccZip.style.borderColor = 'red';
+		const test1 = /^\d{5}$/.test(ccZipDig);
+		if (test1 === true){
+			ccZip.style.borderColor = 'white';
+		} else {
+			ccZip.style.borderColor = 'red';
+			}
+		} 
+	else {ccZip.style.borderColor = 'red';
 	return false;
 	}
 }
@@ -204,12 +243,16 @@ function isValidCVV(){
 	const cVValue = cVV.value;
 	const cVdig = parseInt(cVValue);
 	if (cVValue > 0 ){
-		return /^\d{3}$/.test(cVValue);
-		cVV.style.borderColor = 'white';
-		return true;
-	} 
-	cVV.style.borderColor = 'red';
+		const test = /^\d{3}$/.test(cVdig);
+		if (test === true){
+			cVV.style.borderColor = 'white';
+		} else {
+			cVV.style.borderColor = 'red';
+			}
+		} 
+	else {cVV.style.borderColor = 'red';
 	return false;
+	}
 }
 // EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
 // Validator function -----------------------------------
@@ -240,48 +283,26 @@ const payValFunc = () => {
 		return true;
 	}
 	if (selectedValue === 'credit card'){
+		selectPay.style.borderColor = 'white';
 		createListener();
 	}
 	if (selectedValue === 'credit card' && ccNum.value === ''){
 		ccNum.style.borderColor = 'red';
+		showOrHideTip('show', numTip);
 	} 
 	if (selectedValue === 'credit card' && ccZip.value === ''){
 		ccZip.style.borderColor = 'red';
+		showOrHideTip('show', zipTip);
 	}
 	if (selectedValue === 'credit card' && cVV.value === ''){
 		cVV.style.borderColor = 'red';
-	}
-	else {
-	selectPay.style.borderColor = 'red';
+		showOrHideTip('show', cVVTip);
+	} else if (selectedValue === 'select method'){
+		selectPay.style.borderColor = 'red';
 	return false; 
 	}		
 }
 //-----------------------------------------------------------
-// Add <span> elements for tooltips
-// Tips for CC Number.
-
-const numDiv = document.querySelector('.col-6');
-const numTip = document.createElement('span');
-numTip.textContent = 'Number should be between 13 and 16 digits.';
-numDiv.appendChild(numTip);
-numTip.hidden = true;
-
-// Tips for CC Zipcode.
-
-const zipDiv = document.querySelector('.col-3');
-const zipTip = document.createElement('span');
-zipTip.textContent = 'Please enter 5-digit number.';
-zipDiv.appendChild(zipTip);
-zipTip.hidden = true;
-
-// Tips for CC CVV.
-
-const zipDivs = document.querySelectorAll('.col-3');
-const cvvDiv = zipDivs[1];
-const cVVTip = document.createElement('span');
-cVVTip.textContent = 'Please enter 3-digit number.';
-cvvDiv.appendChild(cVVTip);
-cVVTip.hidden = true;
 
 // EVENT LISTENER FOR ALL FUNCTIONS----------------------
 form.addEventListener('submit', (e) => {
@@ -301,4 +322,11 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     console.log("This validator prevented submission");
   	}
+});
+
+// EVENT LISTENER FOR ALL FUNCTIONS----------------------
+form.addEventListener('submit', (e) => {
+  	if (nameValidFunc() === true && emailValidFunc() === true && activitiesValFunc() === true && payValFunc() === true){
+ 	return true;
+ 	}
 });
