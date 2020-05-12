@@ -1,9 +1,6 @@
 // Set "name" to "autofocus".
-
-nameFocus = function getFocus() {
-	document.querySelector('#name').focus();
-	}
-
+const name = document.querySelector('#name');
+name.focus();
 
 // Create 'other' input field that's hidden initially but displays with js disabled.
 const otherTitle = document.querySelector('#other-title');
@@ -53,12 +50,14 @@ design.addEventListener('change', showInfo, false);
 
 // ACTIVITIES SECTION //
 //----------------------------------------------------------//
+
 const totalActCost = document.createElement('div');
 const activities = document.querySelector('.activities');
 activities.appendChild(totalActCost);
 let actCost = 0;
 totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
 
+// Function to disable conflicting events and enable others -----//
 activities.addEventListener('change', (e) => {
 	const clicked = e.target;
 	const clickedType = parseInt(clicked.getAttribute('data-cost'));
@@ -97,7 +96,7 @@ paypal.hidden = true;
 bit.hidden = true;
 
 // Function identifies which information to show based on payment 
-// 	method selected.
+// 	   method selected.
 function payInfo (e) {
 	const selectedMethod = e.target.value;
 	if (selectedMethod === 'credit card'){
@@ -123,7 +122,14 @@ selectPay.addEventListener('change', payInfo, false);
 // Declare variables for input fields
 const form = document.querySelector('form');
 const nameVal = document.getElementById('name');
-const emailVal = document.getElementById('mail');
+
+const fieldset = document.querySelector('fieldset');
+const nameTip = document.createElement('span');
+nameTip.textContent = 'Name: First Name Last Name. Email: sample@example.com';
+fieldset.appendChild(nameTip);
+nameTip.hidden = true;
+
+const email = document.getElementById('mail');
 
 const activitiesDiv = document.querySelector('.activities');
 const activitiesVal = document.querySelectorAll('.activities input');
@@ -158,29 +164,45 @@ cVVTip.textContent = 'Please enter 3-digit number.';
 cvvDiv.appendChild(cVVTip);
 cVVTip.hidden = true;
 
-
-// Name validator (verify value  > 0)----------------------
-const nameValidFunc = () => {
-	const nameValValue = nameVal.value;
-	if (nameValValue.length > 0){
-		nameVal.style.borderColor = 'white';
-		return true;
-	}
-	nameVal.style.borderColor = 'red';
-	return false;
+// Show / Hide Tips Function so they display on 'input'
+function showOrHideTip(show, element) {
+  // show element when show is true, hide when false
+    if (show) {
+    element.style.display = "inherit";
+    } else {
+    element.style.display = "none";
+      }
 }
 
-// Email validator (contains '@' and '.', in that order)-
-const emailValidFunc = () => {
-	const emailValValue = emailVal.value;	
-	const emailCheck = emailValValue.indexOf('@');
-	const emailLast = emailValValue.lastIndexOf('.');
-	if(emailCheck > 1 && emailLast > (emailCheck + 1)){
-		emailVal.style.borderColor = 'white';
+// Name validator (verify ONLY letters)-------------------
+function nameValidFunc () {
+	const nameValValue = nameVal.value;
+	const testName = /^[A-Za-z]+$/.test(nameValValue);
+	if (nameValValue.length > 0 && testName === true){
+		nameVal.style.borderColor = 'white';
 		return true;
-	} 
-	emailVal.style.borderColor = 'red';
+		}
+		 else {nameVal.style.borderColor = 'red';
+	showOrHideTip('show', nameTip);
 	return false;
+		}
+	}
+
+// Email validator (contains '@' and '.', in that order)-
+
+
+function emailValidFunc (){
+	const emailValue = email.value;	
+	const emailCheck = emailValue.indexOf('@');
+	const emailLast = emailValue.lastIndexOf('.');
+	if(emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)){
+		email.style.borderColor = 'white';
+		return true;
+		}
+    else {
+	email.style.borderColor = 'red';
+	return false;
+	}
 }
 
 // Activities validator (at least 1 selected) -----------
@@ -194,26 +216,17 @@ const activitiesValFunc = () => {
 	activitiesDiv.style.border = '2px solid red';
 	return false;
 }
-	
-// Show / Hide Tips Function so they display on 'input'
-function showOrHideTip(show, element) {
-  // show element when show is true, hide when false
-    if (show) {
-    element.style.display = "inherit";
-    } else {
-    element.style.display = "none";
-      }
-}
-
 
 // -----------------------------------------------------
 function isValidNumber (){
 	const ccNumVal = ccNum.value;
 	const ccNumValDig = parseInt(ccNumVal);
-	if (ccNumValDig > 0 ){
-		const test2 = /^\d{13,16}$/.test(ccNumValDig);
+	const test2 = /^\d{13,16}$/.test(ccNumValDig);
+	if (ccNumValDig > 0){	
 		if (test2 === true){
 			ccNum.style.borderColor = 'white';
+			showOrHideTip('hide', numTip);
+			return true;
 		} else {
 			ccNum.style.borderColor = 'red';
 			}
@@ -226,10 +239,12 @@ function isValidNumber (){
 function isValidZip(){
 	const ccZipVal = ccZip.value;
 	const ccZipDig = parseInt(ccZipVal);
-	if (ccZipDig > 0 ){
-		const test1 = /^\d{5}$/.test(ccZipDig);
+	const test1 = /^\d{5}$/.test(ccZipDig);
+	if (ccZipDig > 0){
 		if (test1 === true){
 			ccZip.style.borderColor = 'white';
+			showOrHideTip('hide', zipTip);
+			return true;
 		} else {
 			ccZip.style.borderColor = 'red';
 			}
@@ -242,10 +257,12 @@ function isValidZip(){
 function isValidCVV(){
 	const cVValue = cVV.value;
 	const cVdig = parseInt(cVValue);
-	if (cVValue > 0 ){
+	if (cVValue > 0){
 		const test = /^\d{3}$/.test(cVdig);
 		if (test === true){
 			cVV.style.borderColor = 'white';
+			showOrHideTip('hide', cVVTip);
+			return true;
 		} else {
 			cVV.style.borderColor = 'red';
 			}
@@ -264,9 +281,11 @@ function createListener(validator) {
     const showTip = text !== "" && !valid;
     const tooltip = e.target.nextElementSibling;
     showOrHideTip(showTip, tooltip);
-  };
+  	};
 }
 
+nameVal.addEventListener("input", createListener(nameValidFunc));
+email.addEventListener("input", createListener(emailValidFunc));
 ccNum.addEventListener("input", createListener(isValidNumber));
 ccZip.addEventListener("input", createListener(isValidZip));
 cVV.addEventListener("input", createListener(isValidCVV));
