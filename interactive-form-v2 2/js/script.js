@@ -36,8 +36,7 @@ function showInfo (){
 			 colorOptions[4].hidden = true;
 			 colorOptions[5].hidden = true;
 			 colorOptions[6].hidden = true;
-	 		}
-	 		else {
+	 		} else {
 	 		 colorOptions[1].hidden = true;
 	 		 colorOptions[2].hidden = true;
 	 		 colorOptions[3].hidden = true;
@@ -45,7 +44,7 @@ function showInfo (){
 			 colorOptions[5].hidden = false;
 			 colorOptions[6].hidden = false;
 	 		}
-	 	}
+}
 // 'Change' listener.
 design.addEventListener('change', showInfo, false);
 
@@ -68,84 +67,80 @@ activities.addEventListener('change', (e) => {
 	if(dateData === actType &&  date !== actInput[i]){ 
 			if(date.checked) {
 				actInput[i].disabled = true;
-			}
-			else {
+			} else {
 				actInput[i].disabled = false;
 			}
 		}
 	}
 		if(clicked.checked){
 			actCost += clickedType;
-		}
-			else {
+		} else {
 			actCost -= clickedType;
-			}
+		}
 	return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 });
 
 // PAYMENT SECTION //
 //---------------------------------------------------------//
+
+// Remove 'select payment method' from options
 const selectPay = document.querySelector('#payment');
 selectPay[0].setAttribute('hidden', 'true');
+// Set credit info to display by default. Hide bit/paypal. 
+const credit = document.getElementById('credit-card');
+const payPal = document.getElementById('paypal');
+const bit = document.getElementById('bitcoin');
+paypal.hidden = true;
+bit.hidden = true;
 
+// Function identifies which information to show based on payment 
+// 	method selected.
 function payInfo (e) {
 	const selectedMethod = e.target.value;
-	const credit = document.getElementById('credit-card');
-	const payPal = document.getElementById('paypal');
-	const bit = document.getElementById('bitcoin');
-	 if (selectedMethod === 'credit card'){
+	if (selectedMethod === 'credit card'){
 			 credit.hidden = false;
 			 payPal.hidden = true;
 			 bit.hidden = true;
-	 		}
-	 	else if (selectedMethod === 'paypal'){
+	} else if (selectedMethod === 'paypal'){
 	 		 credit.hidden = true;
 			 payPal.hidden = false;
 			 bit.hidden = true;
-			}
-	 	else if (selectedMethod === 'bitcoin'){
+	} else if (selectedMethod === 'bitcoin'){
 	 		 credit.hidden = true;
 			 payPal.hidden = true;
 			 bit.hidden = false;
-	 		}
-	 	}
+	}
+}
 // 'Change' listener.
 selectPay.addEventListener('change', payInfo, false);
 
 // FORM VALIDATION //
 //--------------------------------------------------------------//
 
-// declare variables for input fields
+// Declare variables for input fields
 const form = document.querySelector('form');
 const nameVal = document.getElementById('name');
 const emailVal = document.getElementById('mail');
 
 const activitiesDiv = document.querySelector('.activities');
-	console.log(activitiesDiv);
-const activitiesCon = document.querySelector('.activities legend');
 const activitiesVal = document.querySelectorAll('.activities input');
-	console.log(activitiesVal);
-	
 
-	console.log(activitiesVal[1].checked);
-
-
-const ccNumVal = document.querySelector('#cc-num');
+const ccNum = document.querySelector('#cc-num');
 const ccZip = document.querySelector('#zip');
 const cVV = document.querySelector('#cvv');
 
-// name validator (has a value > 0)----------------------
+// Name validator (verify value  > 0)----------------------
 const nameValidFunc = () => {
 	const nameValValue = nameVal.value;
 	if (nameValValue.length > 0){
 		nameVal.style.borderColor = 'white';
 		return true;
 	}
-		nameVal.style.borderColor = 'red';
-		return false;
-	}
+	nameVal.style.borderColor = 'red';
+	return false;
+}
 
-// email validator (contains '@' and '.', in that order)-
+// Email validator (contains '@' and '.', in that order)-
 const emailValidFunc = () => {
 	const emailValValue = emailVal.value;	
 	const emailCheck = emailValValue.indexOf('@');
@@ -154,11 +149,11 @@ const emailValidFunc = () => {
 		emailVal.style.borderColor = 'white';
 		return true;
 	} 
-		emailVal.style.borderColor = 'red';
-		return false;
-	}
+	emailVal.style.borderColor = 'red';
+	return false;
+}
 
-// activities validator (at least 1 selected) -----------
+// Activities validator (at least 1 selected) -----------
 const activitiesValFunc = () => {
 	for (let i = 0; i < activitiesVal.length; i += 1){
 		if (activitiesVal[i].checked){
@@ -166,23 +161,135 @@ const activitiesValFunc = () => {
 			return true;
 		}
 	}
-			activitiesDiv.style.border = '2px solid red';
-			return false;
-		}
+	activitiesDiv.style.border = '2px solid red';
+	return false;
+}
 	
+// Show / Hide Tips Function so they display on 'input'
+function showOrHideTip(show, element) {
+  // show element when show is true, hide when false
+    if (show) {
+    element.style.display = "inherit";
+    } else {
+    element.style.display = "none";
+      }
+}
+
+// -----------------------------------------------------
+function isValidNumber (){
+	const ccNumVal = ccNum.value;
+	const ccNumValDig = parseInt(ccNumVal);
+	if (ccNumValDig > 0 ){
+		return /^\d{13,16}$/.test(ccNumValDig);
+		ccNum.style.borderColor = 'white';
+		return true;
+	} else {ccNum.style.borderColor = 'red';
+	return false;
+	}
+}
+
+function isValidZip(){
+	const ccZipVal = ccZip.value;
+	const ccZipDig = parseInt(ccZipVal);
+	if (ccZipDig > 0 ){
+		return /^\d{5}$/.test(ccZipDig);
+		ccZip.style.borderColor = 'white';
+		return true;
+	} else {ccZip.style.borderColor = 'red';
+	return false;
+	}
+}
+
+function isValidCVV(){
+	const cVValue = cVV.value;
+	const cVdig = parseInt(cVValue);
+	if (cVValue > 0 ){
+		return /^\d{3}$/.test(cVValue);
+		cVV.style.borderColor = 'white';
+		return true;
+	} else {cVV.style.borderColor = 'red';
+	return false;
+
+	}
+}
+// EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
+// Validator function -----------------------------------
+
+function createListener(validator) {
+  return e => {
+    const text = e.target.value;
+    const valid = validator(text);    
+    const showTip = text !== "" && !valid;
+    const tooltip = e.target.nextElementSibling;
+    showOrHideTip(showTip, tooltip);
+  };
+}
+
+ccNum.addEventListener("input", createListener(isValidNumber));
+ccZip.addEventListener("input", createListener(isValidZip));
+cVV.addEventListener("input", createListener(isValidCVV));
+
+// Function identifies payment type---------------------------
+const payValFunc = () => {
+	const selectedValue = selectPay.value;
+	if (selectedValue === 'paypal'){
+		selectPay.style.borderColor = 'white';
+		return true;
+	}
+	if (selectedValue === 'bitcoin'){
+		selectPay.style.borderColor = 'white';
+		return true;
+	}
+	if (selectedValue === 'credit card'){
+		createListener();
+	} else {
+	selectPay.style.borderColor = 'red';
+	return false; 
+	}		
+}
+//-----------------------------------------------------------
+// Add <span> elements for tooltips
+// Tips for CC Number.
+
+const numDiv = document.querySelector('.col-6');
+const numTip = document.createElement('span');
+numTip.textContent = 'Number should be between 13 and 16 digits.';
+numDiv.appendChild(numTip);
+numTip.hidden = true;
+
+// Tips for CC Zipcode.
+
+const zipDiv = document.querySelector('.col-3');
+const zipTip = document.createElement('span');
+zipTip.textContent = 'Please enter 5-digit number.';
+zipDiv.appendChild(zipTip);
+zipTip.hidden = true;
+
+// Tips for CC CVV.
+
+const zipDivs = document.querySelectorAll('.col-3');
+const cvvDiv = zipDivs[1];
+const cVVTip = document.createElement('span');
+cVVTip.textContent = 'Please enter 3-digit number.';
+cvvDiv.appendChild(cVVTip);
+cVVTip.hidden = true;
 
 // EVENT LISTENER FOR ALL FUNCTIONS----------------------
 form.addEventListener('submit', (e) => {
-  if (!nameValidFunc()){
+  	if (!nameValidFunc()){
     e.preventDefault();
     console.log("This validator prevented submission");
-  }
-  if (!emailValidFunc()){
+  	}
+  	if (!emailValidFunc()){
     e.preventDefault();
     console.log("This validator prevented submission");
-  }
-  if (!activitiesValFunc()){
+  	}
+  	if (!activitiesValFunc()){
     e.preventDefault();
     console.log("This validator prevented submission");
-  }
+  	}
+  	if (!payValFunc()){
+    e.preventDefault();
+    console.log("This validator prevented submission");
+  	}
 });
