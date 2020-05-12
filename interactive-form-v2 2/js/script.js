@@ -207,10 +207,9 @@ function isValidCVV(){
 		return /^\d{3}$/.test(cVValue);
 		cVV.style.borderColor = 'white';
 		return true;
-	} else {cVV.style.borderColor = 'red';
+	} 
+	cVV.style.borderColor = 'red';
 	return false;
-
-	}
 }
 // EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
 // Validator function -----------------------------------
@@ -242,7 +241,17 @@ const payValFunc = () => {
 	}
 	if (selectedValue === 'credit card'){
 		createListener();
-	} else {
+	}
+	if (selectedValue === 'credit card' && ccNum.value === ''){
+		ccNum.style.borderColor = 'red';
+	} 
+	if (selectedValue === 'credit card' && ccZip.value === ''){
+		ccZip.style.borderColor = 'red';
+	}
+	if (selectedValue === 'credit card' && cVV.value === ''){
+		cVV.style.borderColor = 'red';
+	}
+	else {
 	selectPay.style.borderColor = 'red';
 	return false; 
 	}		
