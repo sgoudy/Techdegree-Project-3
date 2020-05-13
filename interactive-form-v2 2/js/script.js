@@ -25,65 +25,12 @@ newTee.style.display = 'none';
 // Select color options.
 const colorOptions = document.querySelectorAll('#color option');
 
-//---------------------------------------------------------//
-// Function for listener.
-function showInfo (){
-	 colorTitle.hidden = false;
-		 if (design.value === 'js puns'){
-			 colorOptions[1].hidden = false;
-			 colorOptions[2].hidden = false;
-			 colorOptions[3].hidden = false;
-			 colorOptions[4].hidden = true;
-			 colorOptions[5].hidden = true;
-			 colorOptions[6].hidden = true;
-	 		} else {
-	 		 colorOptions[1].hidden = true;
-	 		 colorOptions[2].hidden = true;
-	 		 colorOptions[3].hidden = true;
-	 		 colorOptions[4].hidden = false;
-			 colorOptions[5].hidden = false;
-			 colorOptions[6].hidden = false;
-	 		}
-}
-// 'Change' listener.
-design.addEventListener('change', showInfo, false);
-
-// ACTIVITIES SECTION //
-//----------------------------------------------------------//
-
+// Activities constants.
 const totalActCost = document.createElement('div');
 const activities = document.querySelector('.activities');
 activities.appendChild(totalActCost);
 let actCost = 0;
 totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
-
-// Function to disable conflicting events and enable others -----//
-activities.addEventListener('change', (e) => {
-	const clicked = e.target;
-	const clickedType = parseInt(clicked.getAttribute('data-cost'));
-	const date = e.target;
-	const dateData = date.getAttribute('data-day-and-time');
-	const actInput = document.querySelectorAll('.activities input');	
-	for (let i = 0; i < actInput.length; i += 1){
-		const actType = actInput[i].getAttribute('data-day-and-time');
-	if(dateData === actType &&  date !== actInput[i]){ 
-			if(date.checked) {
-				actInput[i].disabled = true;
-			} else {
-				actInput[i].disabled = false;
-			}
-		}
-	}
-		if(clicked.checked){
-			actCost += clickedType;
-		} else {
-			actCost -= clickedType;
-		}
-	return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
-});
-
-// PAYMENT SECTION //
-//---------------------------------------------------------//
 
 // Remove 'select payment method' from options
 const selectPay = document.querySelector('#payment');
@@ -95,35 +42,14 @@ const bit = document.getElementById('bitcoin');
 paypal.hidden = true;
 bit.hidden = true;
 
-// Function identifies which information to show based on payment 
-// 	   method selected.
-function payInfo (e) {
-	const selectedMethod = e.target.value;
-	if (selectedMethod === 'credit card'){
-			 credit.hidden = false;
-			 payPal.hidden = true;
-			 bit.hidden = true;
-	} else if (selectedMethod === 'paypal'){
-	 		 credit.hidden = true;
-			 payPal.hidden = false;
-			 bit.hidden = true;
-	} else if (selectedMethod === 'bitcoin'){
-	 		 credit.hidden = true;
-			 payPal.hidden = true;
-			 bit.hidden = false;
-	}
-}
-// 'Change' listener.
-selectPay.addEventListener('change', payInfo, false);
-
-// FORM VALIDATION //
-//--------------------------------------------------------------//
-
 // Declare variables for input fields
 const form = document.querySelector('form');
 const nameVal = document.getElementById('name');
-
+nameVal.setAttribute('clearfix', true);
 const fieldset = document.querySelector('fieldset');
+
+
+
 const nameTip = document.createElement('span');
 nameTip.textContent = 'Name: First Name Last Name. Email: sample@example.com';
 fieldset.appendChild(nameTip);
@@ -164,6 +90,84 @@ cVVTip.textContent = 'Please enter 3-digit number.';
 cvvDiv.appendChild(cVVTip);
 cVVTip.hidden = true;
 
+//---------------------------------------------------------//
+// Function for listener.
+function showInfo (){
+	 colorTitle.hidden = false;
+		 if (design.value === 'js puns'){
+			 colorOptions[1].hidden = false;
+			 colorOptions[2].hidden = false;
+			 colorOptions[3].hidden = false;
+			 colorOptions[4].hidden = true;
+			 colorOptions[5].hidden = true;
+			 colorOptions[6].hidden = true;
+	 		} else {
+	 		 colorOptions[1].hidden = true;
+	 		 colorOptions[2].hidden = true;
+	 		 colorOptions[3].hidden = true;
+	 		 colorOptions[4].hidden = false;
+			 colorOptions[5].hidden = false;
+			 colorOptions[6].hidden = false;
+	 		}
+}
+// 'Change' listener.
+design.addEventListener('change', showInfo, false);
+
+// ACTIVITIES SECTION //
+//----------------------------------------------------------//
+
+// Function to disable conflicting events and enable others -----//
+activities.addEventListener('change', (e) => {
+	const clicked = e.target;
+	const clickedType = parseInt(clicked.getAttribute('data-cost'));
+	const date = e.target;
+	const dateData = date.getAttribute('data-day-and-time');
+	const actInput = document.querySelectorAll('.activities input');	
+	for (let i = 0; i < actInput.length; i += 1){
+		const actType = actInput[i].getAttribute('data-day-and-time');
+	if(dateData === actType &&  date !== actInput[i]){ 
+			if(date.checked) {
+				actInput[i].disabled = true;
+			} else {
+				actInput[i].disabled = false;
+			}
+		}
+	}
+		if(clicked.checked){
+			actCost += clickedType;
+		} else {
+			actCost -= clickedType;
+		}
+	return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
+});
+
+// PAYMENT SECTION //
+//---------------------------------------------------------//
+
+// Function identifies which information to show based on payment 
+// 	   method selected.
+function payInfo (e) {
+	const selectedMethod = e.target.value;
+	if (selectedMethod === 'credit card'){
+			 credit.hidden = false;
+			 payPal.hidden = true;
+			 bit.hidden = true;
+	} else if (selectedMethod === 'paypal'){
+	 		 credit.hidden = true;
+			 payPal.hidden = false;
+			 bit.hidden = true;
+	} else if (selectedMethod === 'bitcoin'){
+	 		 credit.hidden = true;
+			 payPal.hidden = true;
+			 bit.hidden = false;
+	}
+}
+// 'Change' listener.
+selectPay.addEventListener('change', payInfo, false);
+
+// FORM VALIDATION //
+//--------------------------------------------------------------//
+
 // Show / Hide Tips Function so they display on 'input'
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
@@ -175,13 +179,14 @@ function showOrHideTip(show, element) {
 }
 
 // Name validator (verify ONLY letters)-------------------
-function nameValidFunc () {
+function nameValidFunc (){
 	const nameValValue = nameVal.value;
 	const testName = /^[A-Za-z]+$/.test(nameValValue);
-	if (nameValValue.length > 0 && testName === true){
+	if (testName === true){
 		nameVal.style.borderColor = 'white';
+		return true;
 		}
-		 else {nameVal.style.borderColor = 'red';
+		else {nameVal.style.borderColor = 'red';
 		showOrHideTip('show', nameTip);
 		return false;
 		}
@@ -194,6 +199,7 @@ function emailValidFunc (){
 	const emailLast = emailValue.lastIndexOf('.');
     if (emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)) {
     	email.style.borderColor = 'white';
+    	return true;
     }
     else {
 	email.style.borderColor = 'red';
@@ -202,7 +208,7 @@ function emailValidFunc (){
 }
 
 // Activities validator (at least 1 selected) -----------
-const activitiesValFunc = () => {
+function activitiesValFunc (){
 	for (let i = 0; i < activitiesVal.length; i += 1){
 		if (activitiesVal[i].checked){
 			activitiesDiv.style.border = '2px solid white';
@@ -270,7 +276,7 @@ function isValidCVV(){
 // EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
 // Validator function -----------------------------------
 
-function createListener(validator) {
+function createListener(validator){
   return e => {
     const text = e.target.value;
     const valid = validator(text);    
@@ -287,7 +293,7 @@ ccZip.addEventListener("input", createListener(isValidZip));
 cVV.addEventListener("input", createListener(isValidCVV));
 
 // Function identifies payment type---------------------------
-const payValFunc = () => {
+function payValFunc (){
 	const selectedValue = selectPay.value;
 	if (selectedValue === 'paypal'){
 		selectPay.style.borderColor = 'white';
@@ -323,19 +329,19 @@ const payValFunc = () => {
 form.addEventListener('submit', (e) => {
   	if (!nameValidFunc()){
     e.preventDefault();
-    console.log("This validator prevented submission");
+    console.log("This name validator prevented submission");
   	}
   	if (!emailValidFunc()){
     e.preventDefault();
-    console.log("This validator prevented submission");
+    console.log("This email validator prevented submission");
   	}
   	if (!activitiesValFunc()){
     e.preventDefault();
-    console.log("This validator prevented submission");
+    console.log("This activities validator prevented submission");
   	}
   	if (!payValFunc()){
     e.preventDefault();
-    console.log("This validator prevented submission");
+    console.log("This payval validator prevented submission");
   	}
 });
 
