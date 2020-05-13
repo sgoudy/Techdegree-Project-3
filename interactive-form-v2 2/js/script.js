@@ -94,7 +94,6 @@ cVVTip.hidden = true;
 //     when selected.
 
 function titleSelect (){
-	console.log(titles.value);
 	if (titles.value === 'other'){
 		otherTitle.style.display = '';
 	} else {
@@ -213,8 +212,7 @@ function emailValidFunc (){
     if (emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)) {
     	email.style.borderColor = 'white';
     	return true;
-    }
-    else {
+    	} else {
 	email.style.borderColor = 'red';
 	return false;
 	}
@@ -288,7 +286,6 @@ function isValidCVV(){
 }
 // EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
 // Validator function -----------------------------------
-
 function createListener(validator){
   return e => {
     const text = e.target.value;
