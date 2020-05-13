@@ -50,9 +50,14 @@ nameVal.setAttribute('clearfix', true);
 const fieldset = document.querySelector('fieldset');
 
 const nameTip = document.createElement('span');
-nameTip.textContent = 'Name: First Name Last Name. Email: sample@example.com';
+nameTip.innerHTML = ' '+ '<br>' + 'Name: First Name Last Name.' + '<br>' + ' Email: sample@example.com';
 fieldset.appendChild(nameTip);
 nameTip.hidden = true;
+
+const emailTip = document.createElement('span');
+emailTip.innerHTML = ' '+ '<br>' + 'INVALID EMAIL ADDRESS: Must include "@" and "." symbols.';
+fieldset.appendChild(emailTip);
+emailTip.hidden = true;
 
 const email = document.getElementById('mail');
 
@@ -193,13 +198,14 @@ function showOrHideTip(show, element) {
 // Name validator (verify ONLY letters)-------------------
 function nameValidFunc (){
 	const nameValValue = nameVal.value;
-	const testName = /^[A-Za-z]+$/.test(nameValValue);
+	const testName = /^[A-Za-z\s]+$/.test(nameValValue);
 	if (testName === true){
 		nameVal.style.borderColor = 'white';
+		nameTip.hidden = true;
 		return true;
 		}
 		else {nameVal.style.borderColor = 'red';
-		showOrHideTip('show', nameTip);
+		nameTip.hidden = false;
 		return false;
 		}
 }
@@ -211,13 +217,23 @@ function emailValidFunc (){
 	const emailLast = emailValue.lastIndexOf('.');
     if (emailValue.length > 0 && emailCheck > 1 && emailLast > (emailCheck + 1)) {
     	email.style.borderColor = 'white';
+    	nameTip.hidden = true;
+    	emailTip.hidden = true;
     	return true;
-    	} else {
-	email.style.borderColor = 'red';
-	return false;
+    	} 
+		else if (emailValue.length > 0 && (emailCheck === -1 || emailLast === -1)){
+		emailTip.hidden = false;
+		email.style.borderColor = 'blue';
+		return false;
+		} else {
+		email.style.borderColor = 'red';
+		nameTip.hidden = false;
+		return false;
 	}
 }
 
+nameVal.addEventListener("input", nameValidFunc);
+email.addEventListener("input", emailValidFunc);
 // Activities validator (at least 1 selected) -----------
 function activitiesValFunc (){
 	for (let i = 0; i < activitiesVal.length; i += 1){
@@ -296,8 +312,7 @@ function createListener(validator){
   	};
 }
 
-nameVal.addEventListener("input", createListener(nameValidFunc));
-email.addEventListener("input", createListener(emailValidFunc));
+
 ccNum.addEventListener("input", createListener(isValidNumber));
 ccZip.addEventListener("input", createListener(isValidZip));
 cVV.addEventListener("input", createListener(isValidCVV));
