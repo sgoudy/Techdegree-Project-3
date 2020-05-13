@@ -5,6 +5,7 @@ name.focus();
 // Create 'other' input field that's hidden initially but displays with js disabled.
 const otherTitle = document.querySelector('#other-title');
 otherTitle.style.display = 'none';
+const titles = document.querySelector('#title');
 
 // Don't allow "select theme" to be a selected item.
 const design = document.querySelector('#design');
@@ -48,8 +49,6 @@ const nameVal = document.getElementById('name');
 nameVal.setAttribute('clearfix', true);
 const fieldset = document.querySelector('fieldset');
 
-
-
 const nameTip = document.createElement('span');
 nameTip.textContent = 'Name: First Name Last Name. Email: sample@example.com';
 fieldset.appendChild(nameTip);
@@ -91,7 +90,21 @@ cvvDiv.appendChild(cVVTip);
 cVVTip.hidden = true;
 
 //---------------------------------------------------------//
-// Function for listener.
+// Job Role Event Listener and function to show 'Other' field
+//     when selected.
+
+function titleSelect (){
+	console.log(titles.value);
+	if (titles.value === 'other'){
+		otherTitle.style.display = '';
+	} else {
+		otherTitle.style.display = 'none';
+	} return false;
+}
+
+titles.addEventListener('change', titleSelect, false);
+
+// Function for color selection listener.
 function showInfo (){
 	 colorTitle.hidden = false;
 		 if (design.value === 'js puns'){
@@ -213,10 +226,10 @@ function activitiesValFunc (){
 		if (activitiesVal[i].checked){
 			activitiesDiv.style.border = '2px solid white';
 			return true;
-		}
+		} 
 	}
 	activitiesDiv.style.border = '2px solid red';
-	return false;
+	return false; 
 }
 
 // -----------------------------------------------------
@@ -303,22 +316,24 @@ function payValFunc (){
 		selectPay.style.borderColor = 'white';
 		return true;
 	}
-	if (selectedValue === 'credit card'){
-		selectPay.style.borderColor = 'white';
-		createListener();
-	}
-	if (selectedValue === 'credit card' && ccNum.value === ''){
+	else if (selectedValue === 'credit card' && ccNum.value === ''){
 		ccNum.style.borderColor = 'red';
 		showOrHideTip('show', numTip);
 	} 
-	if (selectedValue === 'credit card' && ccZip.value === ''){
+	else if (selectedValue === 'credit card' && ccZip.value === ''){
 		ccZip.style.borderColor = 'red';
-		showOrHideTip('show', zipTip);
+		showOrHideTip('show', zipTip);	
 	}
-	if (selectedValue === 'credit card' && cVV.value === ''){
+	else if (selectedValue === 'credit card' && cVV.value === ''){
 		cVV.style.borderColor = 'red';
 		showOrHideTip('show', cVVTip);
-	} else if (selectedValue === 'select method'){
+	}
+	else if (selectedValue === 'credit card' && ccNum.value !== '' && ccZip.value !== '' && cVV.value !== ''){
+		selectPay.style.borderColor = 'white';
+		console.log('true');
+		return true;
+	}
+	 else if (selectedValue === 'select method'){
 		selectPay.style.borderColor = 'red';
 	return false; 
 	}		
