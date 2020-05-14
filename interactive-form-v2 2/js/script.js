@@ -36,6 +36,8 @@ totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
 // Remove 'select payment method' from options
 const selectPay = document.querySelector('#payment');
 selectPay[0].setAttribute('hidden', 'true');
+selectPay[1].setAttribute('selected', 'selected');
+
 // Set credit info to display by default. Hide bit/paypal. 
 const credit = document.getElementById('credit-card');
 const payPal = document.getElementById('paypal');
@@ -249,9 +251,8 @@ function activitiesValFunc (){
 // -----------------------------------------------------
 function isValidNumber (){
 	const ccNumVal = ccNum.value;
-	const ccNumValDig = parseInt(ccNumVal);
-	const test2 = /^\d{13,16}$/.test(ccNumValDig);
-	if (ccNumValDig > 0){	
+	const test2 = /^[0-9]{13,16}$/.test(ccNumVal);
+	if (ccNumVal > 0){	
 		if (test2 === true){
 			ccNum.style.borderColor = 'white';
 			showOrHideTip('hide', numTip);
@@ -267,9 +268,8 @@ function isValidNumber (){
 
 function isValidZip(){
 	const ccZipVal = ccZip.value;
-	const ccZipDig = parseInt(ccZipVal);
-	const test1 = /^\d{5}$/.test(ccZipDig);
-	if (ccZipDig > 0){
+	const test1 = /^\d{5}$/.test(ccZipVal);
+	if (ccZipVal > 0){
 		if (test1 === true){
 			ccZip.style.borderColor = 'white';
 			showOrHideTip('hide', zipTip);
@@ -285,9 +285,8 @@ function isValidZip(){
 
 function isValidCVV(){
 	const cVValue = cVV.value;
-	const cVdig = parseInt(cVValue);
 	if (cVValue > 0){
-		const test = /^\d{3}$/.test(cVdig);
+		const test = /^\d{3}$/.test(cVValue);
 		if (test === true){
 			cVV.style.borderColor = 'white';
 			showOrHideTip('hide', cVVTip);
@@ -342,7 +341,6 @@ function payValFunc (){
 	}
 	else if (selectedValue === 'credit card' && ccNum.value !== '' && ccZip.value !== '' && cVV.value !== ''){
 		selectPay.style.borderColor = 'white';
-		console.log('true');
 		return true;
 	}
 	 else if (selectedValue === 'select method'){
