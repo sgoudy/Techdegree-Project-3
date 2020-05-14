@@ -251,7 +251,7 @@ function activitiesValFunc (){
 // -----------------------------------------------------
 function isValidNumber (){
 	const ccNumVal = ccNum.value;
-	const test2 = /^[0-9]{13,16}$/.test(ccNumVal);
+	const test2 = /^\d{13,16}$/.test(ccNumVal);
 	if (ccNumVal > 0){	
 		if (test2 === true){
 			ccNum.style.borderColor = 'white';
