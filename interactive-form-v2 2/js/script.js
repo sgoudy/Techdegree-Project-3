@@ -96,9 +96,9 @@ cVVTip.textContent = 'Please enter 3-digit number.';
 cvvDiv.appendChild(cVVTip);
 cVVTip.hidden = true;
 
+// BASIC & T-SHIRT INFO SECTIONS
 //---------------------------------------------------------//
-// Job Role Event Listener and function to show 'Other' field
-//     when selected.
+// Function to show 'Other' Job Role field when selected.
 
 function titleSelect (){
 	if (titles.value === 'other'){
@@ -108,9 +108,8 @@ function titleSelect (){
 	} return false;
 }
 
-titles.addEventListener('change', titleSelect, false);
-
 // Function for color selection listener.
+
 function showInfo (){
 	 colorTitle.hidden = false;
 		 if (design.value === 'js puns'){
@@ -129,8 +128,6 @@ function showInfo (){
 			 colorOptions[6].hidden = false;
 	 		}
 }
-// 'Change' listener.
-design.addEventListener('change', showInfo, false);
 
 // ACTIVITIES SECTION //
 //----------------------------------------------------------//
@@ -154,6 +151,7 @@ activities.addEventListener('change', (e) => {
 	}
 		if(clicked.checked){
 			actCost += clickedType;
+			activitiesDiv.style.border = 'white';
 		} else {
 			actCost -= clickedType;
 		}
@@ -181,8 +179,6 @@ function payInfo (e) {
 			 bit.hidden = false;
 	}
 }
-// 'Change' listener.
-selectPay.addEventListener('change', payInfo, false);
 
 // FORM VALIDATION //
 //--------------------------------------------------------------//
@@ -234,8 +230,6 @@ function emailValidFunc (){
 	}
 }
 
-nameVal.addEventListener("input", nameValidFunc);
-email.addEventListener("input", emailValidFunc);
 // Activities validator (at least 1 selected) -----------
 function activitiesValFunc (){
 	for (let i = 0; i < activitiesVal.length; i += 1){
@@ -248,6 +242,7 @@ function activitiesValFunc (){
 	return false; 
 }
 
+// CREDIT VALIDATORS
 // -----------------------------------------------------
 function isValidNumber (){
 	const ccNumVal = ccNum.value;
@@ -255,10 +250,10 @@ function isValidNumber (){
 	if (ccNumVal > 0){	
 		if (test2 === true){
 			ccNum.style.borderColor = 'white';
-			showOrHideTip('hide', numTip);
 			return true;
 		} else {
 			ccNum.style.borderColor = 'red';
+			return false;
 		}
 	}
 	else {ccNum.style.borderColor = 'red';
@@ -272,10 +267,10 @@ function isValidZip(){
 	if (ccZipVal > 0){
 		if (test1 === true){
 			ccZip.style.borderColor = 'white';
-			showOrHideTip('hide', zipTip);
 			return true;
 		} else {
 			ccZip.style.borderColor = 'red';
+			return false;
 		}
 	} 
 	else {ccZip.style.borderColor = 'red';
@@ -289,18 +284,18 @@ function isValidCVV(){
 		const test = /^\d{3}$/.test(cVValue);
 		if (test === true){
 			cVV.style.borderColor = 'white';
-			showOrHideTip('hide', cVVTip);
 			return true;
 		} else {
 			cVV.style.borderColor = 'red';
+			return false;
 		}
 	} 
 	else {cVV.style.borderColor = 'red';
 	return false;
 	}
 }
-// EVENT LISTENER TO CHECK INPUTS ON CC INFO ------------
-// Validator function -----------------------------------
+
+// Validator function to turn on/ off TIPS on INPUT------------
 function createListener(validator){
   return e => {
     const text = e.target.value;
@@ -311,12 +306,8 @@ function createListener(validator){
   	};
 }
 
-
-ccNum.addEventListener("input", createListener(isValidNumber));
-ccZip.addEventListener("input", createListener(isValidZip));
-cVV.addEventListener("input", createListener(isValidCVV));
-
-// Function identifies payment type---------------------------
+// Function identifies payment type and returns true if any of the 
+// 		below conditions are satisfied----------------------------
 function payValFunc (){
 	const selectedValue = selectPay.value;
 	if (selectedValue === 'paypal'){
@@ -327,30 +318,25 @@ function payValFunc (){
 		selectPay.style.borderColor = 'white';
 		return true;
 	}
-	else if (selectedValue === 'credit card' && ccNum.value === ''){
-		ccNum.style.borderColor = 'red';
-		showOrHideTip('show', numTip);
-	} 
-	else if (selectedValue === 'credit card' && ccZip.value === ''){
-		ccZip.style.borderColor = 'red';
-		showOrHideTip('show', zipTip);	
-	}
-	else if (selectedValue === 'credit card' && cVV.value === ''){
-		cVV.style.borderColor = 'red';
-		showOrHideTip('show', cVVTip);
-	}
-	else if (selectedValue === 'credit card' && ccNum.value !== '' && ccZip.value !== '' && cVV.value !== ''){
-		selectPay.style.borderColor = 'white';
-		return true;
-	}
-	 else if (selectedValue === 'select method'){
-		selectPay.style.borderColor = 'red';
-	return false; 
-	}		
+	// This line validates that every input in the credit section
+	//     is correct before processing as true
+	if (isValidNumber() === true && isValidZip() === true && isValidCVV() === true){
+    	return true;
+  	}
 }
-//-----------------------------------------------------------
 
-// EVENT LISTENER FOR ALL FUNCTIONS----------------------
+// INPUT LISTENER FUNCTIONS
+//-----------------------------------------------------------
+titles.addEventListener('change', titleSelect, false);
+design.addEventListener('change', showInfo, false);
+selectPay.addEventListener('change', payInfo, false);
+nameVal.addEventListener("input", nameValidFunc);
+email.addEventListener("input", emailValidFunc);
+ccNum.addEventListener("input", createListener(isValidNumber), false);
+ccZip.addEventListener("input", createListener(isValidZip), false);
+cVV.addEventListener("input", createListener(isValidCVV), false);
+
+// SUBMIT LISTENER  FUNCTIONS-------------------------------
 form.addEventListener('submit', (e) => {
   	if (!nameValidFunc()){
     e.preventDefault();
@@ -367,12 +353,5 @@ form.addEventListener('submit', (e) => {
   	if (!payValFunc()){
     e.preventDefault();
     console.log("This payval validator prevented submission");
-  	}
-});
-
-// EVENT LISTENER FOR ALL FUNCTIONS----------------------
-form.addEventListener('submit', (e) => {
-  	if (nameValidFunc() === true && emailValidFunc() === true && activitiesValFunc() === true && payValFunc() === true){
- 	return true;
- 	}
+  	}   	
 });
