@@ -110,11 +110,15 @@ function titleSelect (){
 
 // Function for color selection listener.
 
+
 function showInfo (){
 	 colorBlock.hidden = false;
 	 newTee.style.display = '';
 	 newTee.setAttribute('hidden', true);
+	 
+	
 		 if (design.value === 'js puns'){	 			 
+			 colorBlock.value = colorOptions[0].value;
 			 colorOptions[1].hidden = false;
 			 colorOptions[2].hidden = false;
 			 colorOptions[3].hidden = false;
@@ -122,7 +126,8 @@ function showInfo (){
 			 colorOptions[5].hidden = true;
 			 colorOptions[6].hidden = true;
 	 		} 
- 		if (design.value === 'heart js') {		
+ 		if (design.value === 'heart js') {	
+ 			 colorBlock.value = colorOptions[0].value;	
 	 		 colorOptions[1].hidden = true;
 	 		 colorOptions[2].hidden = true;
 	 		 colorOptions[3].hidden = true;
