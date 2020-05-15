@@ -12,14 +12,14 @@ const design = document.querySelector('#design');
 design[0].hidden = true;
 
 // Select parent element of colors.
-const colorTitle = document.querySelector('#color');
-colorTitle.setAttribute('hidden', 'true');
+const colorBlock = document.querySelector('#color');
+colorBlock.hidden = true;
 
 // Add "please select t-shirt" to color list.
 const newTee = document.createElement('option');
-colorTitle.appendChild(newTee);
+colorBlock.appendChild(newTee);
 newTee.textContent = "Please Select a T-shirt Theme";
-colorTitle.insertBefore(newTee, colorTitle.childNodes[0]);
+colorBlock.insertBefore(newTee, colorBlock.childNodes[0]);
 newTee.setAttribute('selected', 'selected');
 newTee.style.display = 'none';
 
@@ -111,22 +111,26 @@ function titleSelect (){
 // Function for color selection listener.
 
 function showInfo (){
-	 colorTitle.hidden = false;
-		 if (design.value === 'js puns'){
+	 colorBlock.hidden = false;
+	 newTee.style.display = '';
+	 newTee.setAttribute('hidden', true);
+		 if (design.value === 'js puns'){	 			 
 			 colorOptions[1].hidden = false;
 			 colorOptions[2].hidden = false;
 			 colorOptions[3].hidden = false;
 			 colorOptions[4].hidden = true;
 			 colorOptions[5].hidden = true;
 			 colorOptions[6].hidden = true;
-	 		} else {
+	 		} 
+ 		if (design.value === 'heart js') {		
 	 		 colorOptions[1].hidden = true;
 	 		 colorOptions[2].hidden = true;
 	 		 colorOptions[3].hidden = true;
 	 		 colorOptions[4].hidden = false;
 			 colorOptions[5].hidden = false;
-			 colorOptions[6].hidden = false;
-	 		}
+			 colorOptions[6].hidden = false;	
+	 		} 
+	 		return true;
 }
 
 // ACTIVITIES SECTION //
