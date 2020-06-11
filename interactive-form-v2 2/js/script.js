@@ -18,9 +18,9 @@ colorBlock.hidden = true;
 // Add "please select t-shirt" to color list.
 const newTee = document.createElement('option');
 colorBlock.appendChild(newTee);
-newTee.textContent = "Please Select a T-shirt Theme";
+newTee.textContent = "Please Select a Color";
 colorBlock.insertBefore(newTee, colorBlock.childNodes[0]);
-newTee.setAttribute('selected', 'selected');
+newTee.setAttribute('selected', true);
 newTee.style.display = 'none';
 
 // Select color options.
@@ -31,7 +31,7 @@ const totalActCost = document.createElement('div');
 const activities = document.querySelector('.activities');
 activities.appendChild(totalActCost);
 let actCost = 0;
-totalActCost.textContent = 'Total Cost: $ ' + `${actCost}`;
+totalActCost.textContent = `Total Cost: $${actCost}`;
 
 // Remove 'select payment method' from options
 const selectPay = document.querySelector('#payment');
@@ -109,15 +109,11 @@ function titleSelect (){
 }
 
 // Function for color selection listener.
-
-
 function showInfo (){
 	 colorBlock.hidden = false;
 	 newTee.style.display = '';
 	 newTee.setAttribute('hidden', true);
-	 
-	
-		 if (design.value === 'js puns'){	 			 
+		if (design.value === 'js puns'){	 			 
 			 colorBlock.value = colorOptions[0].value;
 			 colorOptions[1].hidden = false;
 			 colorOptions[2].hidden = false;
@@ -125,8 +121,7 @@ function showInfo (){
 			 colorOptions[4].hidden = true;
 			 colorOptions[5].hidden = true;
 			 colorOptions[6].hidden = true;
-	 		} 
- 		if (design.value === 'heart js') {	
+	 	} if (design.value === 'heart js') {	
  			 colorBlock.value = colorOptions[0].value;	
 	 		 colorOptions[1].hidden = true;
 	 		 colorOptions[2].hidden = true;
@@ -134,8 +129,7 @@ function showInfo (){
 	 		 colorOptions[4].hidden = false;
 			 colorOptions[5].hidden = false;
 			 colorOptions[6].hidden = false;	
-	 		} 
-	 		return true;
+	 	} return true;
 }
 
 // ACTIVITIES SECTION //
@@ -157,14 +151,12 @@ activities.addEventListener('change', (e) => {
 				actInput[i].disabled = false;
 			}
 		}
-	}
-		if(clicked.checked){
+	} if(clicked.checked){
 			actCost += clickedType;
 			activitiesDiv.style.border = 'white';
-		} else {
+	} else {
 			actCost -= clickedType;
-		}
-	return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
+	} return totalActCost.textContent = 'Total Cost: $' + `${actCost}`;
 });
 
 // PAYMENT SECTION //
@@ -210,8 +202,7 @@ function nameValidFunc (){
 		nameVal.style.borderColor = 'white';
 		nameTip.hidden = true;
 		return true;
-		}
-		else {nameVal.style.borderColor = 'red';
+		} else {nameVal.style.borderColor = 'red';
 		nameTip.hidden = false;
 		return false;
 		}
@@ -227,8 +218,7 @@ function emailValidFunc (){
     	nameTip.hidden = true;
     	emailTip.hidden = true;
     	return true;
-    	} 
-		else if (emailValue.length > 0 && (emailCheck === -1 || emailLast === -1)){
+    	} else if (emailValue.length > 0 && (emailCheck === -1 || emailLast === -1)){
 		emailTip.hidden = false;
 		email.style.borderColor = 'blue';
 		return false;
@@ -236,7 +226,7 @@ function emailValidFunc (){
 		email.style.borderColor = 'red';
 		nameTip.hidden = false;
 		return false;
-	}
+		}
 }
 
 // Activities validator (at least 1 selected) -----------
@@ -264,8 +254,7 @@ function isValidNumber (){
 			ccNum.style.borderColor = 'red';
 			return false;
 		}
-	}
-	else {ccNum.style.borderColor = 'red';
+	} else {ccNum.style.borderColor = 'red';
 	return false;
 	}
 }
@@ -281,8 +270,7 @@ function isValidZip(){
 			ccZip.style.borderColor = 'red';
 			return false;
 		}
-	} 
-	else {ccZip.style.borderColor = 'red';
+	} else {ccZip.style.borderColor = 'red';
 	return false;
 	}
 }
@@ -298,21 +286,20 @@ function isValidCVV(){
 			cVV.style.borderColor = 'red';
 			return false;
 		}
-	} 
-	else {cVV.style.borderColor = 'red';
+	} else {cVV.style.borderColor = 'red';
 	return false;
 	}
 }
 
 // Validator function to turn on/ off TIPS on INPUT------------
 function createListener(validator){
-  return e => {
+  	return e => {
     const text = e.target.value;
     const valid = validator(text);    
     const showTip = text !== "" && !valid;
     const tooltip = e.target.nextElementSibling;
     showOrHideTip(showTip, tooltip);
-  	};
+  	}
 }
 
 // Function identifies payment type and returns true if any of the 
@@ -322,8 +309,7 @@ function payValFunc (){
 	if (selectedValue === 'paypal'){
 		selectPay.style.borderColor = 'white';
 		return true;
-	}
-	if (selectedValue === 'bitcoin'){
+	} if (selectedValue === 'bitcoin'){
 		selectPay.style.borderColor = 'white';
 		return true;
 	}

@@ -70,7 +70,7 @@ button {
 
 legend {
 	text-align: center;
-	padding-top: .5em;
+	padding: .5em 0 .5em;
 	margin-bottom: 1.125em;
 	background-color: black;
 }
